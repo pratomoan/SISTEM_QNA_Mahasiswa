@@ -50,6 +50,12 @@ $admin_name = $_SESSION["name"];
             <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#modalkategori">
                 Fungsi Mata Kuliah
             </button>
+            
+            <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#csvmodal">
+                Export Data
+            </button>
+            
+            
             <form action="logout.php">
                 <button type="submit" class="btn btn-danger float-right">
                     Keluar
@@ -232,6 +238,35 @@ $admin_name = $_SESSION["name"];
         </div>
     </div>        
 
+    
+        <!-- EXPORTCSVXML-->
+    <div class="modal fade" id="csvmodal" tabindex="-1" role="dialog" aria-labelledby="ExportCSVLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="hapusmodal">Export Data Pertanyaan Ke CSV/XML</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="exportDataCSV.php" method="POST">
+
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-danger">Export CSV</button>
+                    </div>
+                </form>
+                <form action="exportDataXML.php" method="POST">
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-danger">Export XML</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>        
+    
+    
 
     <!-- Tambah/Hapus Lessons -->
     <div class="modal fade" id="modalkategori" tabindex="-1" role="dialog" aria-labelledby="kategorilabel" aria-hidden="true">
