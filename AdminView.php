@@ -21,22 +21,22 @@ $admin_name = $_SESSION["name"];
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <?php include_once('include/head.php'); ?>
-
+        
 
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
-
+  
         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
-        <!--        <link rel="stylesheet" href="assets/datatable/dataTables.bootstrap4.min.css">
-                <script src="assets/datatable/jquery.dataTables.min.js"></script>-->
-        <!--        <link ref="stylesheet" type="text/css" href="dist/snackbar.min.css" > 
-                <script src="dist/snackbar.min.js"></script>-->
+<!--        <link rel="stylesheet" href="assets/datatable/dataTables.bootstrap4.min.css">
+        <script src="assets/datatable/jquery.dataTables.min.js"></script>-->
+<!--        <link ref="stylesheet" type="text/css" href="dist/snackbar.min.css" > 
+        <script src="dist/snackbar.min.js"></script>-->
     </head>
 
     <body>
 
         <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
             <!-- Brand/logo -->
-            <a class="navbar-brand" href="#">QNA Admin | <?= $admin_name ?></a>
+            <a class="navbar-brand" href="#">QNA Admin | <?=$admin_name?></a>
 
             <!-- Links -->
             <ul class="navbar-nav"> 
@@ -50,97 +50,85 @@ $admin_name = $_SESSION["name"];
             <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#modalkategori">
                 Fungsi Mata Kuliah
             </button>
-
-            <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#csvmodal">
-                Export Data
-            </button>
-
-            <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#rrsmodal">
-                RRS
-            </button>
-        
-
-        <form action="logout.php">
-            <button type="submit" class="btn btn-danger float-right">
-                Keluar
-            </button>
-        </form>
+            <form action="logout.php">
+                <button type="submit" class="btn btn-danger float-right">
+                    Keluar
+                </button>
+            </form>
+            
+            
+        </div>
 
 
-    </div>
-
-
-    <div class="container pt-12">
-        <div class="row">
-            <div class="col-md-10">
-                <table id="datapertanyaan" class="table table-striped table-bordered" style="width:100%">
-                    <thead>
-                        <tr>
-                            <!--                                Fix susunan grid       -->
-                            <th width="63">No</th>
-                            <th>NRP</th>
-                            <th>Nama</th>
-                            <th>Email</th>
-                            <th>MK</th>
-                            <th>Pertanyaan</th>
-                            <th>Jawaban</th>
-                            <th>Di Jawab Oleh</th>
-                            <th>Tgl Jawab</th>
-                            <th>Tgl Masuk</th>
-                            <th>Pusblished</th> 
-                            <th width="120">Action</th> 
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        //Lihat datanya di include/data.php
-                        $counter = 1;
-                        //$query = "SELECT q.question_id, q.submitted_by, q.answered_by, q.question, q.answer, q.email, q.nama, q.is_answered, q.category_id, k.category, k.category_by as 'viewpertanyaan' FROM question q join category k on q.category_id = k.id";
-                        $query = "SELECT q.question_id, q.submitted_by, q.answered_by, q.question, q.answer, q.email, q.nama, q.tanggal_jawab, "
-                                . "q.tanggal_masuk, q.is_published, q.is_answered, q.category_id, "
-                                . "k.category, k.category_by AS 'viewpertanyaan' FROM question q JOIN category k on q.category_id = k.id";
-                        $stmt = $dbh->query($query);
-                        //$stmt = $dbh->query('SELECT * FROM question');
-                        while ($row = $stmt->fetch()) {
-                            $publishedstring = $row['is_published'];
-                            ?><tr>
-                                <td id="id-<?= $row['question_id'] ?>" ><?= $counter ?></td>
-                                <td><?= $row['submitted_by'] ?></td>
-                                <td><?= $row['nama'] ?></td>
-                                <td style="max-width: 400px;"><textarea style="resize: none" rows="3" cols="12" readonly><?= $row['email'] ?></textarea></td>
-                                <td id="category-<?= $row['question_id'] ?>"><?= $row['category'] ?></td>
-                                <td style="max-width: 400px;" id="question-<?= $row['question_id'] ?>"><textarea rows="5" cols="15" style="resize:none; border:0px;" readonly><?= $row['question'] ?></textarea></td>
-                                <td style="max-width: 400px;"><textarea rows="5" cols="15" id="answerid-<?= $row['question_id'] ?>" style="resize:none; border:0px;" readonly><?= $row['answer'] ?></textarea></td>
-                                <td><?= $row['answered_by'] ?></td>
-                                <td><?= $row['tanggal_jawab'] ?></td>
-                                <td><?= $row['tanggal_masuk'] ?></td>
-                                <td><?php
-                                    if ($publishedstring === "1") {
-                                        echo 'Published';
-                                    } else {
-                                        echo 'Un Published';
-                                    }
-                                    ?>
-                                </td>
-
-
+        <div class="container pt-12">
+            <div class="row">
+                <div class="col-md-10">
+                    <table id="datapertanyaan" class="table table-striped table-bordered" style="width:100%">
+                        <thead>
+                            <tr>
+<!--                                Fix susunan grid       -->
+                                <th width="63">No</th>
+                                <th>NRP</th>
+                                <th>Nama</th>
+                                <th>Email</th>
+                                <th>MK</th>
+                                <th>Pertanyaan</th>
+                                <th>Jawaban</th>
+                                <th>Di Jawab Oleh</th>
+                                <th>Tgl Jawab</th>
+                                <th>Tgl Masuk</th>
+                                <th>Pusblished</th> 
+                                <th width="120">Action</th> 
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            //Lihat datanya di include/data.php
+                            $counter = 1;
+                            //$query = "SELECT q.question_id, q.submitted_by, q.answered_by, q.question, q.answer, q.email, q.nama, q.is_answered, q.category_id, k.category, k.category_by as 'viewpertanyaan' FROM question q join category k on q.category_id = k.id";
+                            $query = "SELECT q.question_id, q.submitted_by, q.answered_by, q.question, q.answer, q.email, q.nama, q.tanggal_jawab, "
+                                    . "q.tanggal_masuk, q.is_published, q.is_answered, q.category_id, "
+                                    . "k.category, k.category_by AS 'viewpertanyaan' FROM question q JOIN category k on q.category_id = k.id";
+                            $stmt = $dbh->query($query);
+                            //$stmt = $dbh->query('SELECT * FROM question');
+                            while ($row = $stmt->fetch()) {
+                               $publishedstring = $row['is_published'];
+                                ?><tr>
+                                <td id="id-<?=$row['question_id'] ?>" ><?=$counter?></td>
+                                <td><?= $row['submitted_by']?></td>
+                                <td><?=$row['nama']?></td>
+                                <td style="max-width: 400px;"><textarea style="resize: none" rows="3" cols="12" readonly><?=$row['email']?></textarea></td>
+                                <td id="category-<?=$row['question_id']?>"><?=$row['category']?></td>
+                                <td style="max-width: 400px;" id="question-<?=$row['question_id']?>"><textarea rows="5" cols="15" style="resize:none; border:0px;" readonly><?=$row['question']?></textarea></td>
+                                <td style="max-width: 400px;"><textarea rows="5" cols="15" id="answerid-<?=$row['question_id']?>" style="resize:none; border:0px;" readonly><?=$row['answer']?></textarea></td>
+                                <td><?= $row['answered_by']?></td>
+                                <td><?= $row['tanggal_jawab']?></td>
+                                <td><?= $row['tanggal_masuk']?></td>
+                            <td><?php if($publishedstring==="1"){
+                                echo 'Published';
+                                }else{
+                                    echo 'Un Published';
+                                }?>
+                            </td>
+                                
+                                
                                 <td class="text-center">
                                     <div class="btn-group" role="group">
-                                        <button type="button" class="btn btn-primary btn-sm float-right jawab" data-id="<?= $row['question_id'] ?>" data-toggle="modal" data-target="#jawabmodal">Jawab/Edit</button>
-                                        <div>  &nbsp;&nbsp; </div>
-                                        <button type="button" class="btn btn-danger btn-sm float-right hapus" data-id="<?= $row['question_id'] ?>" data-toggle="modal" data-target="#hapusmodal">Hapus</button>
+                                        <button type="button" class="btn btn-primary btn-sm float-right jawab" data-id="<?= $row['question_id']?>" data-toggle="modal" data-target="#jawabmodal">Jawab/Edit</button>
+                                       <div>  &nbsp;&nbsp; </div>
+                                        <button type="button" class="btn btn-danger btn-sm float-right hapus" data-id="<?=$row['question_id']?>" data-toggle="modal" data-target="#hapusmodal">Hapus</button>
                                     </div>
                                 </td>
                             </tr>
                             <?php
-                            $counter += 1;
-                        }
-                        ?>
-                    </tbody>
-                </table>
+                                $counter += 1;
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
 
     <!-- Jawab Pertanyaan -->
     <div class="modal fade" id="jawabmodal" tabindex="-1" role="dialog" aria-labelledby="JawabPertanyaanLabel" aria-hidden="true">
@@ -174,20 +162,20 @@ $admin_name = $_SESSION["name"];
                                 <option value="0">Un Publish</option>
                                 <option value="1">Publish</option>
                             </select>
-
+                            
                             <div> <br> </div>
                             <label for="matkul_pilih">Ubah Mata Kulliah?</label>
                             <input type="hidden" id="jawab_matkul_id" name="question" value="">
                             <div></div>
-
+                            
                             <select name="matkul_pilih" class="form-select" aria-label="Pilih Matkul">
                                 <option value="" selected>Pilih Mata Kuliah</option>
-                                <?php
-                                $stmt = $dbh->query('SELECT * FROM category');
-                                while ($row = $stmt->fetch()) {
-                                    echo '<option value="' . $row['id'] . '">' . $row['category'] . '</option>';
-                                }
-                                ?>
+                    <?php
+                    $stmt = $dbh->query('SELECT * FROM category');
+                    while ($row = $stmt->fetch()) {
+                        echo '<option value="' . $row['id'] . '">' . $row['category'] . '</option>';
+                    }
+                    ?>
                                 ?>
                             </select>
 
@@ -245,63 +233,6 @@ $admin_name = $_SESSION["name"];
     </div>        
 
 
-    <!-- EXPORTCSVXML-->
-    <div class="modal fade" id="csvmodal" tabindex="-1" role="dialog" aria-labelledby="ExportCSVLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="hapusmodal">Export Data Pertanyaan Ke CSV/XML</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form action="exportDataCSV.php" method="POST">
-
-
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-danger">Export CSV</button>
-                    </div>
-                </form>
-                <form action="exportDataXML.php" method="POST">
-
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-danger">Export XML</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>        
-
-
-    <!-- RRSMODAL-->
-    <div class="modal fade" id="rrsmodal" tabindex="-1" role="dialog" aria-labelledby="RSSModal" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="hapusmodal">RSS Update/Hapus</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form action="UpdateRRSAdmin.php" method="POST">
-
-
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-danger">Update RRS</button>
-                    </div>
-                </form>
-                <form action="HapusSemuaRRS.php" method="POST">
-
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-danger">Hapus RRS</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>        
-
-
-
     <!-- Tambah/Hapus Lessons -->
     <div class="modal fade" id="modalkategori" tabindex="-1" role="dialog" aria-labelledby="kategorilabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -325,12 +256,12 @@ $admin_name = $_SESSION["name"];
                         <div class="form-group">
                             <select  name="kategori" class="form-select" aria-label="Default select example">
                                 <option value="" selected>Hapus Mata Kuliah</option>
-                                <?php
-                                $stmt = $dbh->query('SELECT * FROM category');
-                                while ($row = $stmt->fetch()) {
-                                    echo '<option value="' . $row['id'] . '">' . $row['category'] . '</option>';
-                                }
-                                ?>
+<?php
+$stmt = $dbh->query('SELECT * FROM category');
+while ($row = $stmt->fetch()) {
+    echo '<option value="' . $row['id'] . '">' . $row['category'] . '</option>';
+}
+?>
                             </select>
                             <div> <br> </div>
                             <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
@@ -355,21 +286,21 @@ $admin_name = $_SESSION["name"];
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php
-                                    $counter = 1;
+<?php
+$counter = 1;
 //Lihat datanya di include/data.php
-                                    $query = "SELECT * FROM category";
-                                    $stmt = $dbh->query($query);
+$query = "SELECT * FROM category";
+$stmt = $dbh->query($query);
 //$stmt = $dbh->query('SELECT * FROM question');
-                                    while ($row = $stmt->fetch()) {
-                                        echo '<tr>
+while ($row = $stmt->fetch()) {
+    echo '<tr>
                                 <td>' . $counter . '</td>
                                 <td>' . $row['category'] . '</td>
                                 <td>' . $row['category_by'] . '</td>
                             </tr>';
-                                        $counter += 1;
-                                    }
-                                    ?>
+    $counter += 1;
+}
+?>
                                 </tbody>
                             </table>
                         </div>
